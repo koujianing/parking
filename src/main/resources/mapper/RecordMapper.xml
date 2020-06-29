@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.parkingManagement.repository.RecordMapper">
+    <resultMap id="BaseResultMap" type="com.example.parkingManagement.model.Record">
+        <constructor>
+            <idArg column="recordId" javaType="_long" jdbcType="BIGINT"/>
+            <arg column="icCardId" javaType="_long" jdbcType="BIGINT"/>
+            <arg column="userName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="parkCardNumber" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="enterDate" javaType="java.lang.String" jdbcType="DATE"/>
+            <arg column="whetherOut" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    recordId,
+    icCardId,
+    userName,
+    parkCardNumber,
+    enterDate,
+    whetherOut
+    </sql>
+    <sql id="Insert_Column_List">
+    icCardId,
+    userName,
+    parkCardNumber,
+    enterDate,
+    whetherOut
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="_long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from record
+        where recordId = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectRecord" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from record
+    </select>
+    <insert id="insertRecord" parameterType="com.example.parkingManagement.model.Record">
+        insert into record(
+        <include refid="Insert_Column_List"/>
+        )values (
+        #{icCardId},
+        #{userName},
+        #{parkCardNumber},
+        #{enterDate},
+        #{whetherOut}
+        )
+    </insert>
+    <update id="updateRecord" parameterType="com.example.parkingManagement.model.Record">
+        update record set
+        icCardId=#{icCardId},
+        userName=#{userName},
+        parkCardNumber=#{parkCardNumber},
+        enterDate=#{enterDate},
+        whetherOut=#{whetherOut}
+        where parkingId = #{parkingId}
+    </update>
+</mapper>

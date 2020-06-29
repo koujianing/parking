@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.parkingManagement.repository.TestMapper">
+    <resultMap id="BaseResultMap" type="com.example.parkingManagement.model.Test">
+        <constructor>
+            <idArg column="id" javaType="_long" jdbcType="BIGINT"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id,`name`
+    </sql>
+    <sql id="Insert_Column_List">
+    `name`
+    </sql>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from test
+    </select>
+    <select id="get" parameterType="_long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from test
+        where id = #{id}
+    </select>
+    <insert id="insert" parameterType="com.example.parkingManagement.model.Test">
+        insert into test(
+        <include refid="Insert_Column_List"/>
+        ) values (
+        #{name}
+        )
+    </insert>
+    <update id="update" parameterType="com.example.parkingManagement.model.Test">
+        update test set
+        name = #{name}
+        where id = #{id}
+    </update>
+    <delete id="delete" parameterType="_long">
+        delete from test
+        where id = #{id}
+    </delete>
+</mapper>

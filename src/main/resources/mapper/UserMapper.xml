@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.parkingManagement.repository.UserMapper">
+    <resultMap id="BaseResultMap" type="com.example.parkingManagement.model.User">
+        <constructor>
+            <idArg column="userId" javaType="_long" jdbcType="BIGINT" />
+            <arg column="userRole" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="userNickname" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="userName" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="userPassword" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="userPhone" javaType="_long" jdbcType="BIGINT" />
+        </constructor>
+    </resultMap>
+    <sql id ="Base_Column_List">
+    userId,userRole,userNickname,userName,userPassword,userPhone
+    </sql>
+    <sql id = "Insert_Column_List">
+    userRole,userNickname,userName,userPassword,userPhone
+    </sql>
+    <select id="selectByPrimaryById" parameterType="_long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `user`
+        where userId=#{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `user`
+    </select>
+    <insert id="insertUser" parameterType="com.example.parkingManagement.model.User">
+        insert into user(
+        <include refid="Insert_Column_List"/>
+        ) values (
+        #{userRole},#{userNickname},
+        #{userName},#{userPassword},#{userPhone}
+        )
+    </insert>
+    <update id="update" parameterType="com.example.parkingManagement.model.User">
+        update `user` set
+        userRole=#{userRole},userNickname=#{userNickname},userName=#{userName},
+        userPassword=#{userPassword},userPhone=#{userPhone}
+        where userId=#{userId}
+    </update>
+</mapper>

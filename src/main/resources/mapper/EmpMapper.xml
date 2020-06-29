@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.parkingManagement.repository.EmpMapper">
+    <resultMap id="BaseResultMap" type="com.example.parkingManagement.model.Emp">
+        <constructor>
+            <arg column="empno"  javaType="_long" jdbcType="BIGINT"/>
+            <arg column="ename" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="sex" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="head" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="deptno" javaType="_long" jdbcType="BIGINT"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+         empno,ename,sex,head,deptno
+    </sql>
+    <sql id="Insert_Column_List">
+        ename,sex,head,deptno
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="_long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from emp
+        where empno = #{empno}
+    </select>
+    <select id="selectEmp" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from emp
+    </select>
+    <insert id="insertEmp" parameterType="com.example.parkingManagement.model.Emp">
+        insert into emp(
+        <include refid="Insert_Column_List"/>
+        ) values (
+        #{ename},
+        #{sex},
+        #{head},
+        #{deptno}
+        )
+    </insert>
+    <update id="updateEmp" parameterType="com.example.parkingManagement.model.Emp">
+        update Emp set
+        ename=#{ename},sex=#{sex},head=#{head},deptno=#{deptno}
+        where empno=#{empno}
+    </update>
+    <delete id="deleteEmp" parameterType="_long">
+        delete from emp
+        where empno = #{empno}
+    </delete>
+</mapper>
